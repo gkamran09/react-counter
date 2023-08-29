@@ -1,21 +1,25 @@
+import React from "react";
 import Counter from "./Counter";
+import { useDispatch } from "react-redux";
+import {updateCount} from './counterSlice'
 
-const CounterGroup = (props) => {
-    // useDispatch
-    const handleCountChange = (index, diff) => () => {
-        // dispatch the action once the number inside any counter changes
-    };
-
-    return props.counterList.map((count, index) => {
-        return (
-            <Counter
-                key={index}
-                count={count}
-                increase={handleCountChange(index, 1)}
-                decrease={handleCountChange(index, -1)}
-            />
-        );
-    });
-};
-
+function CounterGroup({ counterList }) {
+    const dispatch = useDispatch()
+    const handleConstChange = (index,diff) =>()=> {
+        const newList = [...counterList]
+        newList[index] += diff;
+        dispatch(updateCount(newList));
+    }
+ return (
+        <div>
+            {counterList.map((count, index) => (
+                <Counter key={index} 
+                count={count} 
+                index={index} 
+                increase= {handleConstChange(index, 1)}
+                decrease= {handleConstChange(index, -1)}/>
+            ))}
+        </div>
+    );
+}    
 export default CounterGroup;

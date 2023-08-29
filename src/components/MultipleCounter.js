@@ -1,20 +1,20 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 import CounterGroup from "./CounterGroup";
-import CounterGroupSum from "./CounterGroupSum";
 import CounterSizeGenerator from "./CounterSizeGenerator";
+import { useSelector } from "react-redux";
+import CounterGroupSum from "./CounterGroupSum";
 
-const MultipleCounter = () => {
-    const counterList = useSelector((state) => state.counter.counterList);
-    const sum = counterList.reduce((prev, count) => prev + count, 0);
-    
+
+function MultipleCounter() {
+    const counterList = useSelector(state => state.counter.counterList);
+
     return (
         <div>
             <CounterSizeGenerator />
-            <CounterGroupSum sum={sum} />
+            <CounterGroupSum sum={counterList.reduce((prev, count) => prev + count, 0)} />
             <CounterGroup counterList={counterList} />
         </div>
     );
-};
+}
 
 export default MultipleCounter;
